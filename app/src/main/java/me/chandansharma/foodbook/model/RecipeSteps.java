@@ -7,6 +7,10 @@ package me.chandansharma.foodbook.model;
 
 public class RecipeSteps {
 
+    /**
+     * Member Variable to holds Recipe Steps Details.
+     */
+
     private String mRecipeStepsShortDescription;
     private String mRecipeStepsDescription;
     private String mRecipeStepsVideoUrl;

@@ -1,7 +1,9 @@
-package me.chandansharma.foodbook;
+package me.chandansharma.foodbook.ui;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import me.chandansharma.foodbook.R;
 
 public class FoodBookMainScreen extends AppCompatActivity {
 

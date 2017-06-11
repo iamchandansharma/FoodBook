@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -27,6 +29,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private Context mContext;
     private ArrayList<Recipe> mRecipes;
+    private int mItemPosition;
 
     public RecipeListAdapter(Context context, ArrayList<Recipe> recipes) {
         mContext = context;
@@ -39,7 +42,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
          * Create new Single View and not added to children of the parent view
          */
         return new RecipeListViewHolder(LayoutInflater.from(mContext)
-                .inflate(R.layout.recipe_details, parent, false));
+                .inflate(R.layout.recipe_list, parent, false));
     }
 
     @Override
@@ -59,10 +62,11 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      * RecipeListViewHolder class which cache view once so that
      * each and every time not called findViewById
      */
-    private class RecipeListViewHolder extends RecyclerView.ViewHolder {
+    private class RecipeListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView mRecipeThumbnailImageView;
         private TextView mRecipeNameTextView;
+        private LinearLayout mRecipeNameLinearLayout;
         private ImageView mRecipeFavouriteButton;
 
         private RecipeListViewHolder(View itemView) {
@@ -71,10 +75,13 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mRecipeThumbnailImageView = (ImageView) itemView.findViewById(R.id.im_recipe_thumbnail);
             mRecipeNameTextView = (TextView) itemView.findViewById(R.id.tv_recipe_name);
             mRecipeFavouriteButton = (ImageView) itemView.findViewById(R.id.im_favourite_button);
+            mRecipeNameLinearLayout = (LinearLayout) itemView.findViewById(R.id.ll_recipe_name);
+            mRecipeThumbnailImageView.setOnClickListener(this);
+
         }
 
         private void bindView(int itemPosition) {
-
+            mItemPosition = itemPosition;
             Glide.with(mContext)
                     .load(mRecipes.get(itemPosition).getRecipeThumbnailUrl())
                     .placeholder(ContextCompat.getDrawable(mContext,
@@ -83,7 +90,12 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .into(mRecipeThumbnailImageView);
 
             mRecipeNameTextView.setText(mRecipes.get(itemPosition).getRecipeName());
-            mRecipeNameTextView.setBackgroundColor(Color.argb(178, 0, 0, 0));
+            mRecipeNameLinearLayout.setBackgroundColor(Color.argb(178, 0, 0, 0));
+        }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(mContext, "Item Clicked " + mItemPosition, Toast.LENGTH_SHORT).show();
         }
     }
 }

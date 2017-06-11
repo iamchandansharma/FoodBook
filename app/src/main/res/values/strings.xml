@@ -2,4 +2,7 @@
     <string name="app_name">Food Book</string>
     <string name="recipe_thumbnail_image">Recipe Thumbnail Image</string>
     <string name="favourite_button_image">Favourite Button Image</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

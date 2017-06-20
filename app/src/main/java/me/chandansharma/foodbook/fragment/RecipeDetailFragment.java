@@ -44,5 +44,4 @@ public class RecipeDetailFragment extends Fragment {
 
         return rootView;
     }
-
 }

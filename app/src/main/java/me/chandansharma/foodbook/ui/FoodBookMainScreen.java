@@ -43,6 +43,7 @@ public class FoodBookMainScreen extends AppCompatActivity {
          */
         getRecipeListData(RecipeDetails.RECIPE_URL);
 
+
         mRecipeListAdapter = new RecipeListAdapter(this, mRecipes);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_recipe_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

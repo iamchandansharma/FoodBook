@@ -93,7 +93,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 ((RecipeDetailActivity) mContext).getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(android.R.id.content, recipeIngredientsDetailFragment)
+                        .replace(R.id.fm_recipe_detail, recipeIngredientsDetailFragment)
                         .addToBackStack(null)
                         .commit();
 
@@ -112,7 +112,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 ((RecipeDetailActivity) mContext).getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(android.R.id.content, recipeStepsDetailFragment)
+                        .replace(R.id.fm_recipe_detail, recipeStepsDetailFragment)
                         .addToBackStack(null)
                         .commit();
             }

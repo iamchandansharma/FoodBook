@@ -63,7 +63,7 @@ public class RecipeStepsDetailFragment extends Fragment {
 
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(android.R.id.content, recipeStepsDetailFragment)
+                            .replace(R.id.fm_recipe_detail, recipeStepsDetailFragment)
                             .commit();
                 }
             }
@@ -89,12 +89,11 @@ public class RecipeStepsDetailFragment extends Fragment {
 
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(android.R.id.content, recipeStepsDetailFragment)
+                            .replace(R.id.fm_recipe_detail, recipeStepsDetailFragment)
                             .commit();
                 }
             }
         });
         return rootView;
     }
-
 }

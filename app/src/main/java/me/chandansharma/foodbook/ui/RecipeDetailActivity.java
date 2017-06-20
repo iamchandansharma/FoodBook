@@ -36,7 +36,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(android.R.id.content, recipeDetailFragment)
+                .replace(R.id.fm_recipe_detail, recipeDetailFragment)
                 .commit();
     }
 

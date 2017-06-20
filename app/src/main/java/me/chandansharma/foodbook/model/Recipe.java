@@ -1,6 +1,7 @@
 package me.chandansharma.foodbook.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by iamcs on 2017-06-10.
@@ -12,25 +13,38 @@ public class Recipe {
     /**
      * Member Variable to holds Recipe Ingredients and Recipe Steps Details.
      */
-
+    private int mRecipeId;
     private String mRecipeName;
     private String mRecipeThumbnailUrl;
     private ArrayList<RecipeIngredients> mRecipeIngredients;
     private ArrayList<RecipeSteps> mRecipeSteps;
+    private HashMap<Integer, ArrayList<RecipeIngredients>> mIntegerArrayListHashMap;
 
     /**
+     * @param mRecipeId           Id of the Recipe
      * @param mRecipeName         Name of the recipe
      * @param mRecipeThumbnailUrl ThumbnailUrl of the particular recipe
      * @param mRecipeIngredients  Collection of Recipe Ingredients for single recipe
      * @param mRecipeSteps        Complete Recipe Procedure
      */
-    public Recipe(String mRecipeName, String mRecipeThumbnailUrl,
+    public Recipe(int mRecipeId, String mRecipeName, String mRecipeThumbnailUrl,
                   ArrayList<RecipeIngredients> mRecipeIngredients,
-                  ArrayList<RecipeSteps> mRecipeSteps) {
+                  ArrayList<RecipeSteps> mRecipeSteps,
+                  HashMap<Integer, ArrayList<RecipeIngredients>> mIntegerArrayListHashMap) {
+        this.mRecipeId = mRecipeId;
         this.mRecipeName = mRecipeName;
         this.mRecipeThumbnailUrl = mRecipeThumbnailUrl;
         this.mRecipeIngredients = mRecipeIngredients;
         this.mRecipeSteps = mRecipeSteps;
+        this.mIntegerArrayListHashMap = mIntegerArrayListHashMap;
+    }
+
+    public int getRecipeId() {
+        return mRecipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        mRecipeId = recipeId;
     }
 
     public String getRecipeName() {
@@ -63,5 +77,13 @@ public class Recipe {
 
     public void setRecipeSteps(ArrayList<RecipeSteps> recipeSteps) {
         mRecipeSteps = recipeSteps;
+    }
+
+    public HashMap<Integer, ArrayList<RecipeIngredients>> getIntegerArrayListHashMap() {
+        return mIntegerArrayListHashMap;
+    }
+
+    public void setIntegerArrayListHashMap(HashMap<Integer, ArrayList<RecipeIngredients>> integerArrayListHashMap) {
+        mIntegerArrayListHashMap = integerArrayListHashMap;
     }
 }

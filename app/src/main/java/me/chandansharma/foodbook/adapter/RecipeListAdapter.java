@@ -1,6 +1,7 @@
 package me.chandansharma.foodbook.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.model.Recipe;
+import me.chandansharma.foodbook.model.RecipeIngredients;
+import me.chandansharma.foodbook.ui.RecipeDetailActivity;
 import me.chandansharma.foodbook.utils.RecipeDetails;
 
 /**
@@ -29,7 +32,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private Context mContext;
     private ArrayList<Recipe> mRecipes;
-    private int mItemPosition;
 
     public RecipeListAdapter(Context context, ArrayList<Recipe> recipes) {
         mContext = context;
@@ -64,6 +66,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      */
     private class RecipeListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private int mItemPosition;
+
         private ImageView mRecipeThumbnailImageView;
         private TextView mRecipeNameTextView;
         private LinearLayout mRecipeNameLinearLayout;
@@ -76,8 +80,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mRecipeNameTextView = (TextView) itemView.findViewById(R.id.tv_recipe_name);
             mRecipeFavouriteButton = (ImageView) itemView.findViewById(R.id.im_favourite_button);
             mRecipeNameLinearLayout = (LinearLayout) itemView.findViewById(R.id.ll_recipe_name);
-            mRecipeThumbnailImageView.setOnClickListener(this);
-
+            itemView.setOnClickListener(this);
         }
 
         private void bindView(int itemPosition) {
@@ -95,6 +98,18 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Override
         public void onClick(View v) {
+
+            Intent sendRecipeDetailIntent = new Intent(mContext, RecipeDetailActivity.class);
+            sendRecipeDetailIntent.putParcelableArrayListExtra(RecipeDetails.RECIPE_INGREDIENTS_KEY,
+                    mRecipes.get(mItemPosition).getIntegerArrayListHashMap()
+                            .get(mRecipes.get(mItemPosition).getRecipeId()));
+            ArrayList<RecipeIngredients> mRecipe =
+                    mRecipes.get(mItemPosition).getIntegerArrayListHashMap()
+                            .get(mRecipes.get(mItemPosition).getRecipeId());
+            sendRecipeDetailIntent.putParcelableArrayListExtra(RecipeDetails.RECIPE_STEPS_KEY,
+                    mRecipes.get(mItemPosition).getRecipeSteps());
+            mContext.startActivity(sendRecipeDetailIntent);
+
             Toast.makeText(mContext, "Item Clicked " + mItemPosition, Toast.LENGTH_SHORT).show();
         }
     }

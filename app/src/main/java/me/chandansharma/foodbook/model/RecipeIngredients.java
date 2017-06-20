@@ -1,12 +1,27 @@
 package me.chandansharma.foodbook.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by iamcs on 2017-06-10.
  * Model class for Recipe Ingredients
  */
 
-public class RecipeIngredients {
+public class RecipeIngredients implements Parcelable {
 
+    //Method to recreate RecipeIngredients from Parcel
+    public static Creator<RecipeIngredients> CREATOR = new Creator<RecipeIngredients>() {
+        @Override
+        public RecipeIngredients createFromParcel(Parcel source) {
+            return new RecipeIngredients(source);
+        }
+
+        @Override
+        public RecipeIngredients[] newArray(int size) {
+            return new RecipeIngredients[size];
+        }
+    };
     /**
      * Member Variable to holds Recipe Ingredients Details.
      */
@@ -26,6 +41,13 @@ public class RecipeIngredients {
         this.mRecipeIngredientsName = mRecipeIngredientsName;
         this.mRecipeIngredientsMeasure = mRecipeIngredientsMeasure;
         this.mRecipeIngredientsQuantity = mRecipeIngredientsQuantity;
+    }
+
+    // Parcelling part
+    private RecipeIngredients(Parcel in) {
+        mRecipeIngredientsName = in.readString();
+        mRecipeIngredientsMeasure = in.readString();
+        mRecipeIngredientsQuantity = in.readDouble();
     }
 
     public String getRecipeIngredientsName() {
@@ -50,5 +72,17 @@ public class RecipeIngredients {
 
     public void setRecipeIngredientsQuantity(Double recipeIngredientsQuantity) {
         mRecipeIngredientsQuantity = recipeIngredientsQuantity;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mRecipeIngredientsName);
+        dest.writeString(mRecipeIngredientsMeasure);
+        dest.writeDouble(mRecipeIngredientsQuantity);
     }
 }

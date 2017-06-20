@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.adapter.RecipeListAdapter;
@@ -30,6 +31,8 @@ public class FoodBookMainScreen extends AppCompatActivity {
      * Recipe Ingredients, Recipe Steps
      */
     private ArrayList<Recipe> mRecipes = new ArrayList<>();
+    private HashMap<Integer, ArrayList<RecipeIngredients>> mRecipeIngredientsMap =
+            new HashMap<>();
     private ArrayList<RecipeIngredients> mRecipeIngredients = new ArrayList<>();
     private ArrayList<RecipeSteps> mRecipeSteps = new ArrayList<>();
 
@@ -66,6 +69,7 @@ public class FoodBookMainScreen extends AppCompatActivity {
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject singleRecipeJsonObject = response.getJSONObject(i);
+                                int recipeId = singleRecipeJsonObject.getInt("id");
                                 String recipeName = singleRecipeJsonObject
                                         .getString("name");
                                 String recipeImageThumbnailUrl = singleRecipeJsonObject
@@ -76,7 +80,7 @@ public class FoodBookMainScreen extends AppCompatActivity {
                                  */
                                 JSONArray singleRecipeIngredientsJsonArray = singleRecipeJsonObject
                                         .getJSONArray("ingredients");
-
+                                mRecipeIngredients.clear();
                                 for (int j = 0; j < singleRecipeIngredientsJsonArray.length(); j++) {
                                     JSONObject singleRecipeIngredientsJsonObject =
                                             singleRecipeIngredientsJsonArray.getJSONObject(j);
@@ -117,8 +121,9 @@ public class FoodBookMainScreen extends AppCompatActivity {
                                             );
                                     mRecipeSteps.add(singleRecipeSteps);
                                 }
-                                mRecipes.add(new Recipe(recipeName, recipeImageThumbnailUrl,
-                                        mRecipeIngredients, mRecipeSteps));
+                                mRecipeIngredientsMap.put(recipeId, mRecipeIngredients);
+                                mRecipes.add(new Recipe(recipeId, recipeName, recipeImageThumbnailUrl,
+                                        mRecipeIngredients, mRecipeSteps, mRecipeIngredientsMap));
                                 mRecipeListAdapter.notifyDataSetChanged();
                             } catch (JSONException e) {
                                 e.printStackTrace();

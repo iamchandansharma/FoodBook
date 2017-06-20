@@ -1,12 +1,26 @@
 package me.chandansharma.foodbook.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by iamcs on 2017-06-10.
  * Model class for Recipe Steps
  */
 
-public class RecipeSteps {
+public class RecipeSteps implements Parcelable {
 
+    public static Creator<RecipeSteps> CREATOR = new Creator<RecipeSteps>() {
+        @Override
+        public RecipeSteps createFromParcel(Parcel source) {
+            return new RecipeSteps(source);
+        }
+
+        @Override
+        public RecipeSteps[] newArray(int size) {
+            return new RecipeSteps[size];
+        }
+    };
     /**
      * Member Variable to holds Recipe Steps Details.
      */
@@ -30,6 +44,15 @@ public class RecipeSteps {
         this.mRecipeStepsDescription = mRecipeStepsDescription;
         this.mRecipeStepsVideoUrl = mRecipeStepsVideoUrl;
         this.mRecipeStepsThumbnailUrl = mRecipeStepsThumbnailUrl;
+    }
+
+    // Parcelling Part
+    private RecipeSteps(Parcel in) {
+
+        mRecipeStepsShortDescription = in.readString();
+        mRecipeStepsDescription = in.readString();
+        mRecipeStepsVideoUrl = in.readString();
+        mRecipeStepsThumbnailUrl = in.readString();
     }
 
     public String getRecipeStepsShortDescription() {
@@ -62,5 +85,19 @@ public class RecipeSteps {
 
     public void setRecipeStepsThumbnailUrl(String recipeStepsThumbnailUrl) {
         mRecipeStepsThumbnailUrl = recipeStepsThumbnailUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(mRecipeStepsShortDescription);
+        dest.writeString(mRecipeStepsDescription);
+        dest.writeString(mRecipeStepsVideoUrl);
+        dest.writeString(mRecipeStepsThumbnailUrl);
     }
 }

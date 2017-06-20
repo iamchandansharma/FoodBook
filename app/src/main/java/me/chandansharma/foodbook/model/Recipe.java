@@ -1,7 +1,6 @@
 package me.chandansharma.foodbook.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by iamcs on 2017-06-10.
@@ -18,7 +17,6 @@ public class Recipe {
     private String mRecipeThumbnailUrl;
     private ArrayList<RecipeIngredients> mRecipeIngredients;
     private ArrayList<RecipeSteps> mRecipeSteps;
-    private HashMap<Integer, ArrayList<RecipeIngredients>> mIntegerArrayListHashMap;
 
     /**
      * @param mRecipeId           Id of the Recipe
@@ -29,14 +27,12 @@ public class Recipe {
      */
     public Recipe(int mRecipeId, String mRecipeName, String mRecipeThumbnailUrl,
                   ArrayList<RecipeIngredients> mRecipeIngredients,
-                  ArrayList<RecipeSteps> mRecipeSteps,
-                  HashMap<Integer, ArrayList<RecipeIngredients>> mIntegerArrayListHashMap) {
+                  ArrayList<RecipeSteps> mRecipeSteps) {
         this.mRecipeId = mRecipeId;
         this.mRecipeName = mRecipeName;
         this.mRecipeThumbnailUrl = mRecipeThumbnailUrl;
         this.mRecipeIngredients = mRecipeIngredients;
         this.mRecipeSteps = mRecipeSteps;
-        this.mIntegerArrayListHashMap = mIntegerArrayListHashMap;
     }
 
     public int getRecipeId() {
@@ -79,11 +75,4 @@ public class Recipe {
         mRecipeSteps = recipeSteps;
     }
 
-    public HashMap<Integer, ArrayList<RecipeIngredients>> getIntegerArrayListHashMap() {
-        return mIntegerArrayListHashMap;
-    }
-
-    public void setIntegerArrayListHashMap(HashMap<Integer, ArrayList<RecipeIngredients>> integerArrayListHashMap) {
-        mIntegerArrayListHashMap = integerArrayListHashMap;
-    }
 }

@@ -2,7 +2,6 @@ package me.chandansharma.foodbook.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,18 +24,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ArrayList<RecipeSteps> recipeSteps = getIntent()
                 .getParcelableArrayListExtra(RecipeDetails.RECIPE_STEPS_KEY);
 
-        Bundle recipeStepsDataBundle = new Bundle();
-        recipeStepsDataBundle.putParcelableArrayList(RecipeDetails.RECIPE_STEPS_KEY,
+        Bundle recipeDetailDataBundle = new Bundle();
+
+        recipeDetailDataBundle.putParcelableArrayList(RecipeDetails.RECIPE_INGREDIENTS_KEY,
+                recipeIngredients);
+        recipeDetailDataBundle.putParcelableArrayList(RecipeDetails.RECIPE_STEPS_KEY,
                 recipeSteps);
 
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
-        recipeDetailFragment.setArguments(recipeStepsDataBundle);
+        recipeDetailFragment.setArguments(recipeDetailDataBundle);
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(android.R.id.content, recipeDetailFragment)
                 .commit();
-
-        Toast.makeText(this, recipeIngredients.get(0).getRecipeIngredientsName(), Toast.LENGTH_SHORT).show();
     }
 }

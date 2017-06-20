@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.adapter.RecipeDetailAdapter;
+import me.chandansharma.foodbook.model.RecipeIngredients;
 import me.chandansharma.foodbook.model.RecipeSteps;
 import me.chandansharma.foodbook.utils.RecipeDetails;
 
@@ -21,24 +22,22 @@ import me.chandansharma.foodbook.utils.RecipeDetails;
  */
 public class RecipeDetailFragment extends Fragment {
 
-    /**
-     *
-     *
-     */
-    private ArrayList<RecipeSteps> mRecipeSteps;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        ArrayList<RecipeIngredients> recipeIngredients = new ArrayList<>();
+        ArrayList<RecipeSteps> recipeSteps = new ArrayList<>();
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
-        mRecipeSteps = getArguments().getParcelableArrayList(RecipeDetails.RECIPE_STEPS_KEY);
+        recipeIngredients = getArguments().getParcelableArrayList(RecipeDetails.RECIPE_INGREDIENTS_KEY);
+        recipeSteps = getArguments().getParcelableArrayList(RecipeDetails.RECIPE_STEPS_KEY);
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_recipe_detail);
         RecipeDetailAdapter recipeDetailAdapter = new RecipeDetailAdapter(getActivity(),
-                mRecipeSteps);
+                recipeIngredients, recipeSteps);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recipeDetailAdapter);

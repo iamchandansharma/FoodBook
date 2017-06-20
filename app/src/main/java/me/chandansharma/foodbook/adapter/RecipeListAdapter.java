@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.model.Recipe;
-import me.chandansharma.foodbook.model.RecipeIngredients;
 import me.chandansharma.foodbook.ui.RecipeDetailActivity;
 import me.chandansharma.foodbook.utils.RecipeDetails;
 
@@ -101,16 +99,10 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             Intent sendRecipeDetailIntent = new Intent(mContext, RecipeDetailActivity.class);
             sendRecipeDetailIntent.putParcelableArrayListExtra(RecipeDetails.RECIPE_INGREDIENTS_KEY,
-                    mRecipes.get(mItemPosition).getIntegerArrayListHashMap()
-                            .get(mRecipes.get(mItemPosition).getRecipeId()));
-            ArrayList<RecipeIngredients> mRecipe =
-                    mRecipes.get(mItemPosition).getIntegerArrayListHashMap()
-                            .get(mRecipes.get(mItemPosition).getRecipeId());
+                    mRecipes.get(mItemPosition).getRecipeIngredients());
             sendRecipeDetailIntent.putParcelableArrayListExtra(RecipeDetails.RECIPE_STEPS_KEY,
                     mRecipes.get(mItemPosition).getRecipeSteps());
             mContext.startActivity(sendRecipeDetailIntent);
-
-            Toast.makeText(mContext, "Item Clicked " + mItemPosition, Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -25,8 +25,8 @@ public class RecipeIngredientsDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ArrayList<RecipeIngredients> recipeIngredients = getActivity().getIntent()
-                .getParcelableArrayListExtra(RecipeDetails.RECIPE_INGREDIENTS_KEY);
+        ArrayList<RecipeIngredients> recipeIngredients = getArguments()
+                .getParcelableArrayList(RecipeDetails.RECIPE_INGREDIENTS_KEY);
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recipe_ingredients_detail, container, false);

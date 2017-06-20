@@ -20,6 +20,8 @@ public class RecipeDetails {
     public static final String RECIPE_KEY = "recipe";
     public static final String RECIPE_STEPS_KEY = "recipe_steps";
     public static final String RECIPE_INGREDIENTS_KEY = "recipe_ingredients";
+    public static final String RECIPE_STEPS_INDEX = "steps_index";
+
 
     public static final int[] recipeThumbnailId = {
             R.drawable.nutellapie,

@@ -1,7 +1,6 @@
 package me.chandansharma.foodbook.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -75,7 +74,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (itemPosition == 0)
                 mRecipeDetailTextView.setText("Recipe Ingredients");
             else
-                mRecipeDetailTextView.setText("Step " + itemPosition + ": " +
+                mRecipeDetailTextView.setText("Step " + (itemPosition - 1) + ": " +
                         mRecipeSteps.get(itemPosition - 1).getRecipeStepsShortDescription());
         }
 
@@ -89,20 +88,33 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 recipeIngredientsDataBundle.putParcelableArrayList(RecipeDetails.RECIPE_INGREDIENTS_KEY,
                         mRecipeIngredients);
 
-                Fragment recipeIngredientsFragment = new RecipeIngredientsDetailFragment();
-                recipeIngredientsFragment.setArguments(recipeIngredientsDataBundle);
+                Fragment recipeIngredientsDetailFragment = new RecipeIngredientsDetailFragment();
+                recipeIngredientsDetailFragment.setArguments(recipeIngredientsDataBundle);
 
                 ((RecipeDetailActivity) mContext).getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(android.R.id.content, recipeIngredientsFragment)
+                        .replace(android.R.id.content, recipeIngredientsDetailFragment)
+                        .addToBackStack(null)
                         .commit();
 
             } else {
-                Intent sendRecipeStepsDetailIntent = new Intent(mContext,
-                        RecipeStepsDetailFragment.class);
-                sendRecipeStepsDetailIntent.putExtra(RecipeDetails.RECIPE_STEPS_KEY,
+
+                Bundle recipeStepsDataBundle = new Bundle();
+
+                recipeStepsDataBundle.putParcelableArrayList(RecipeDetails.RECIPE_STEPS_KEY,
                         mRecipeSteps);
-                mContext.startActivity(sendRecipeStepsDetailIntent);
+                recipeStepsDataBundle.putInt(RecipeDetails.RECIPE_STEPS_INDEX,
+                        mItemPosition - 1);
+
+                Fragment recipeStepsDetailFragment = new RecipeStepsDetailFragment();
+                recipeStepsDetailFragment.setArguments(recipeStepsDataBundle);
+
+
+                ((RecipeDetailActivity) mContext).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(android.R.id.content, recipeStepsDetailFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         }
     }

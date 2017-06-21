@@ -1,9 +1,13 @@
 package me.chandansharma.foodbook.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +21,7 @@ import me.chandansharma.foodbook.fragment.RecipeStepsDetailFragment;
 import me.chandansharma.foodbook.model.RecipeIngredients;
 import me.chandansharma.foodbook.model.RecipeSteps;
 import me.chandansharma.foodbook.ui.RecipeDetailActivity;
+import me.chandansharma.foodbook.ui.RecipeStepsActivity;
 import me.chandansharma.foodbook.utils.RecipeDetails;
 
 /**
@@ -81,41 +86,79 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @Override
         public void onClick(View v) {
 
+            float smallestWidth = getSmallestWidth();
+            Log.d("My APP", String.valueOf(smallestWidth));
+
             if (mItemPosition == 0) {
 
-                Bundle recipeIngredientsDataBundle = new Bundle();
+                if (smallestWidth >= 600 || mContext.getResources().getConfiguration().orientation
+                        == Configuration.ORIENTATION_LANDSCAPE) {
 
-                recipeIngredientsDataBundle.putParcelableArrayList(RecipeDetails.RECIPE_INGREDIENTS_KEY,
-                        mRecipeIngredients);
+                    Bundle recipeIngredientsDataBundle = new Bundle();
 
-                Fragment recipeIngredientsDetailFragment = new RecipeIngredientsDetailFragment();
-                recipeIngredientsDetailFragment.setArguments(recipeIngredientsDataBundle);
+                    recipeIngredientsDataBundle.putInt(RecipeDetails.RECIPE_STEPS_INDEX, mItemPosition);
 
-                ((RecipeDetailActivity) mContext).getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fm_recipe_detail, recipeIngredientsDetailFragment)
-                        .addToBackStack(null)
-                        .commit();
+                    recipeIngredientsDataBundle.putParcelableArrayList(RecipeDetails.RECIPE_INGREDIENTS_KEY,
+                            mRecipeIngredients);
 
+                    Fragment recipeIngredientsDetailFragment = new RecipeIngredientsDetailFragment();
+                    recipeIngredientsDetailFragment.setArguments(recipeIngredientsDataBundle);
+
+                    ((RecipeDetailActivity) mContext).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fm_recipe_steps, recipeIngredientsDetailFragment)
+                            .commit();
+                } else {
+                    Intent sendRecipeIngredientsIntent = new Intent(mContext, RecipeStepsActivity.class);
+                    sendRecipeIngredientsIntent.putExtra(RecipeDetails.RECIPE_STEPS_INDEX,
+                            String.valueOf(mItemPosition));
+                    sendRecipeIngredientsIntent
+                            .putParcelableArrayListExtra(RecipeDetails.RECIPE_INGREDIENTS_KEY,
+                                    mRecipeIngredients);
+                    mContext.startActivity(sendRecipeIngredientsIntent);
+                }
             } else {
 
-                Bundle recipeStepsDataBundle = new Bundle();
+                if (smallestWidth >= 600 || mContext.getResources().getConfiguration().orientation
+                        == Configuration.ORIENTATION_LANDSCAPE) {
 
-                recipeStepsDataBundle.putParcelableArrayList(RecipeDetails.RECIPE_STEPS_KEY,
-                        mRecipeSteps);
-                recipeStepsDataBundle.putInt(RecipeDetails.RECIPE_STEPS_INDEX,
-                        mItemPosition - 1);
+                    Bundle recipeStepsDataBundle = new Bundle();
 
-                Fragment recipeStepsDetailFragment = new RecipeStepsDetailFragment();
-                recipeStepsDetailFragment.setArguments(recipeStepsDataBundle);
+                    recipeStepsDataBundle.putInt(RecipeDetails.RECIPE_STEPS_INDEX, mItemPosition - 1);
 
+                    recipeStepsDataBundle.putParcelableArrayList(RecipeDetails.RECIPE_STEPS_KEY,
+                            mRecipeSteps);
 
-                ((RecipeDetailActivity) mContext).getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fm_recipe_detail, recipeStepsDetailFragment)
-                        .addToBackStack(null)
-                        .commit();
+                    Fragment recipeStepsDetailFragment = new RecipeStepsDetailFragment();
+                    recipeStepsDetailFragment.setArguments(recipeStepsDataBundle);
+
+                    ((RecipeDetailActivity) mContext).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fm_recipe_steps, recipeStepsDetailFragment)
+                            .commit();
+                } else {
+                    Intent sendRecipeStepsIntent = new Intent(mContext, RecipeStepsActivity.class);
+                    sendRecipeStepsIntent.putExtra(RecipeDetails.RECIPE_STEPS_INDEX,
+                            String.valueOf(mItemPosition));
+                    sendRecipeStepsIntent.putParcelableArrayListExtra(RecipeDetails.RECIPE_STEPS_KEY,
+                            mRecipeSteps);
+                    mContext.startActivity(sendRecipeStepsIntent);
+                }
             }
+        }
+
+        private float getSmallestWidth() {
+            DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+
+            int widthInPixel = displayMetrics.widthPixels;
+            int heightInPixel = displayMetrics.heightPixels;
+
+            float scaleFactor = displayMetrics.density;
+
+            float widthInDp = widthInPixel / scaleFactor;
+            float heightInDp = heightInPixel / scaleFactor;
+
+            return Math.min(widthInDp, heightInDp);
         }
     }
 }

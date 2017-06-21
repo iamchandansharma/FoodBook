@@ -42,7 +42,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
          * Create new Single View and not added to children of the parent view
          */
         return new RecipeListViewHolder(LayoutInflater.from(mContext)
-                .inflate(R.layout.recipe_list, parent, false));
+                .inflate(R.layout.recipe_list_item, parent, false));
     }
 
     @Override

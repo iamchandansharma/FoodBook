@@ -1,9 +1,11 @@
 package me.chandansharma.foodbook.ui;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -42,11 +44,18 @@ public class FoodBookMainScreen extends AppCompatActivity {
          * Helper Function to retrieve the data from the internet
          */
         getRecipeListData(RecipeDetails.RECIPE_URL);
-
-
+        float smallestWidth = getSmallestWidth();
         mRecipeListAdapter = new RecipeListAdapter(this, mRecipes);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_recipe_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
+                || smallestWidth > 600)
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        else if (smallestWidth >= 480)
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        else
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+
         recyclerView.setAdapter(mRecipeListAdapter);
     }
 
@@ -141,6 +150,21 @@ public class FoodBookMainScreen extends AppCompatActivity {
                 });
         //Add RecipeList Data request to RequestQueue
         VolleySingleton.getInstance().addToRequestQueue(recipeJsonArray, jsonArrayTag);
+    }
+
+    private float getSmallestWidth() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        int widthInPixel = displayMetrics.widthPixels;
+        int heightInPixel = displayMetrics.heightPixels;
+
+        float scaleFactor = displayMetrics.density;
+
+        float widthInDp = widthInPixel / scaleFactor;
+        float heightInDp = heightInPixel / scaleFactor;
+
+        return Math.min(widthInDp, heightInDp);
     }
 }
 

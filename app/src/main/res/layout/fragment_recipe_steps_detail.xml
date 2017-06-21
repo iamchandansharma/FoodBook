@@ -8,13 +8,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/im_recipe_steps_video"
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/epv_recipe_steps_video"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/brownies"/>
+        android:layout_weight="0.5"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -35,6 +33,7 @@
     </android.support.v7.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/ll_recipe_navigation"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"

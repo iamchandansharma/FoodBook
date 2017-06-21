@@ -39,12 +39,4 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 .replace(R.id.fm_recipe_detail, recipeDetailFragment)
                 .commit();
     }
-
-    @Override
-    public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0)
-            getFragmentManager().popBackStack();
-        else
-            super.onBackPressed();
-    }
 }

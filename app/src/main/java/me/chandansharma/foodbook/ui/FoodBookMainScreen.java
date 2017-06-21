@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.adapter.RecipeListAdapter;
 import me.chandansharma.foodbook.model.Recipe;
@@ -27,12 +29,13 @@ import me.chandansharma.foodbook.utils.VolleySingleton;
 
 public class FoodBookMainScreen extends AppCompatActivity {
 
+    @BindView(R.id.rv_recipe_list)
+    RecyclerView mRecyclerView;
     /**
      * Declaration of the ArrayList of the Model Recipe,
      * Recipe Ingredients, Recipe Steps
      */
     private ArrayList<Recipe> mRecipes = new ArrayList<>();
-
     private RecipeListAdapter mRecipeListAdapter;
 
     @Override
@@ -40,23 +43,25 @@ public class FoodBookMainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_book_main_screen);
 
+        ButterKnife.bind(this);
+
         /**
          * Helper Function to retrieve the data from the internet
          */
+
         getRecipeListData(RecipeDetails.RECIPE_URL);
         float smallestWidth = getSmallestWidth();
         mRecipeListAdapter = new RecipeListAdapter(this, mRecipes);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_recipe_list);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
                 || smallestWidth > 600)
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         else if (smallestWidth >= 480)
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         else
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
 
-        recyclerView.setAdapter(mRecipeListAdapter);
+        mRecyclerView.setAdapter(mRecipeListAdapter);
     }
 
     private void getRecipeListData(String recipeUrl) {

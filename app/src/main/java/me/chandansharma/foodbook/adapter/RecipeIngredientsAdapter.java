@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.model.RecipeIngredients;
 
@@ -43,21 +45,21 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecyclerView.
         return mRecipeIngredients.size();
     }
 
-    private class RecipeIngredientsViewHolder extends RecyclerView.ViewHolder {
+    class RecipeIngredientsViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mRecipeIngredientsNameTextView;
-        private TextView mRecipeIngredientsQuantityTextView;
-        private TextView mRecipeIngredientsMeasureTextView;
+        @BindView(R.id.tv_recipe_ingredients_name)
+        TextView mRecipeIngredientsNameTextView;
+
+        @BindView(R.id.tv_recipe_ingredients_quantity)
+        TextView mRecipeIngredientsQuantityTextView;
+
+        @BindView(R.id.tv_recipe_ingredients_measure)
+        TextView mRecipeIngredientsMeasureTextView;
 
         private RecipeIngredientsViewHolder(View itemView) {
             super(itemView);
 
-            mRecipeIngredientsNameTextView = (TextView) itemView
-                    .findViewById(R.id.tv_recipe_ingredients_name);
-            mRecipeIngredientsQuantityTextView = (TextView) itemView
-                    .findViewById(R.id.tv_recipe_ingredients_quantity);
-            mRecipeIngredientsMeasureTextView = (TextView) itemView
-                    .findViewById(R.id.tv_recipe_ingredients_measure);
+            ButterKnife.bind(this, itemView);
         }
 
         private void bindView(int itemPosition) {

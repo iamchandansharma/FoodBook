@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.model.Recipe;
 import me.chandansharma.foodbook.ui.RecipeDetailActivity;
@@ -62,22 +64,20 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      * RecipeListViewHolder class which cache view once so that
      * each and every time not called findViewById
      */
-    private class RecipeListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class RecipeListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        @BindView(R.id.im_recipe_thumbnail)
+        ImageView mRecipeThumbnailImageView;
+        @BindView(R.id.tv_recipe_name)
+        TextView mRecipeNameTextView;
+        @BindView(R.id.ll_recipe_name)
+        LinearLayout mRecipeNameLinearLayout;
         private int mItemPosition;
-
-        private ImageView mRecipeThumbnailImageView;
-        private TextView mRecipeNameTextView;
-        private LinearLayout mRecipeNameLinearLayout;
-        private ImageView mRecipeFavouriteButton;
 
         private RecipeListViewHolder(View itemView) {
             super(itemView);
 
-            mRecipeThumbnailImageView = (ImageView) itemView.findViewById(R.id.im_recipe_thumbnail);
-            mRecipeNameTextView = (TextView) itemView.findViewById(R.id.tv_recipe_name);
-            mRecipeFavouriteButton = (ImageView) itemView.findViewById(R.id.im_favourite_button);
-            mRecipeNameLinearLayout = (LinearLayout) itemView.findViewById(R.id.ll_recipe_name);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
@@ -98,6 +98,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public void onClick(View v) {
 
             Intent sendRecipeDetailIntent = new Intent(mContext, RecipeDetailActivity.class);
+            sendRecipeDetailIntent.putExtra(RecipeDetails.RECIPE_INDEX_KEY, mItemPosition + 1);
             sendRecipeDetailIntent.putParcelableArrayListExtra(RecipeDetails.RECIPE_INGREDIENTS_KEY,
                     mRecipes.get(mItemPosition).getRecipeIngredients());
             sendRecipeDetailIntent.putParcelableArrayListExtra(RecipeDetails.RECIPE_STEPS_KEY,

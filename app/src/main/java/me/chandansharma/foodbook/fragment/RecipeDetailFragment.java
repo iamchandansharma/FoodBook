@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.adapter.RecipeDetailAdapter;
 import me.chandansharma.foodbook.model.RecipeIngredients;
@@ -22,6 +24,9 @@ import me.chandansharma.foodbook.utils.RecipeDetails;
  */
 public class RecipeDetailFragment extends Fragment {
 
+    @BindView(R.id.rv_recipe_detail)
+    RecyclerView mRecyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,17 +35,17 @@ public class RecipeDetailFragment extends Fragment {
         ArrayList<RecipeSteps> recipeSteps = new ArrayList<>();
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
+        View rootView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
+        ButterKnife.bind(this, rootView);
         recipeIngredients = getArguments().getParcelableArrayList(RecipeDetails.RECIPE_INGREDIENTS_KEY);
         recipeSteps = getArguments().getParcelableArrayList(RecipeDetails.RECIPE_STEPS_KEY);
 
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_recipe_detail);
         RecipeDetailAdapter recipeDetailAdapter = new RecipeDetailAdapter(getActivity(),
                 recipeIngredients, recipeSteps);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(recipeDetailAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(recipeDetailAdapter);
 
         return rootView;
     }

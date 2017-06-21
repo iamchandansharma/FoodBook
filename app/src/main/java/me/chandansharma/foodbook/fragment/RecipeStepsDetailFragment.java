@@ -28,6 +28,8 @@ import com.google.android.exoplayer2.util.Util;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.model.RecipeSteps;
 import me.chandansharma.foodbook.utils.RecipeDetails;
@@ -37,11 +39,19 @@ import me.chandansharma.foodbook.utils.RecipeDetails;
  */
 public class RecipeStepsDetailFragment extends Fragment {
 
+    @BindView(R.id.epv_recipe_steps_video)
+    SimpleExoPlayerView mSimpleExoPlayerView;
+    @BindView(R.id.tv_recipe_steps_detail)
+    TextView mRecipeStepsDescription;
+    @BindView(R.id.tv_previous_step)
+    TextView mPreviousRecipeStepsTextView;
+    @BindView(R.id.tv_next_step)
+    TextView mNextRecipeStepsTextView;
+    @BindView(R.id.ll_recipe_navigation)
+    LinearLayout mRecipeNavigationLinearLayout;
     private ArrayList<RecipeSteps> mRecipeSteps;
     private int mRecipeStepsIndex;
-
     private SimpleExoPlayer mSimpleExoPlayer;
-    private SimpleExoPlayerView mSimpleExoPlayerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,33 +63,24 @@ public class RecipeStepsDetailFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recipe_steps_detail, container, false);
-        mSimpleExoPlayerView = (SimpleExoPlayerView) rootView
-                .findViewById(R.id.epv_recipe_steps_video);
+        ButterKnife.bind(this, rootView);
 
         Uri mediaUri = Uri.parse(mRecipeSteps.get(mRecipeStepsIndex).getRecipeStepsVideoUrl());
 
         //Initialize the Player
         initializePlayer(mediaUri);
 
-        TextView recipeStepsDescription = (TextView) rootView
-                .findViewById(R.id.tv_recipe_steps_detail);
-
-        TextView previousRecipeStepsTextView = (TextView) rootView
-                .findViewById(R.id.tv_previous_step);
-        TextView nextRecipeStepsTextView = (TextView) rootView.findViewById(R.id.tv_next_step);
-        LinearLayout recipeNavigationLinearLayout = (LinearLayout)
-                rootView.findViewById(R.id.ll_recipe_navigation);
         if (mRecipeSteps != null)
-            recipeStepsDescription.setText(mRecipeSteps.get(mRecipeStepsIndex)
+            mRecipeStepsDescription.setText(mRecipeSteps.get(mRecipeStepsIndex)
                     .getRecipeStepsDescription());
         float smallestWidth = getSmallestWidth();
 
         if (smallestWidth >= 600 || getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE)
-            recipeNavigationLinearLayout.setVisibility(View.GONE);
+            mRecipeNavigationLinearLayout.setVisibility(View.GONE);
         else {
 
-            previousRecipeStepsTextView.setOnClickListener(new View.OnClickListener() {
+            mPreviousRecipeStepsTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mRecipeStepsIndex <= 0)
@@ -104,7 +105,7 @@ public class RecipeStepsDetailFragment extends Fragment {
                 }
             });
 
-            nextRecipeStepsTextView.setOnClickListener(new View.OnClickListener() {
+            mNextRecipeStepsTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 

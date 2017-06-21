@@ -17,7 +17,7 @@ public class RecipeDetails {
     /**
      * Recipe Steps and Recipe Ingredients Key Value
      */
-    public static final String RECIPE_KEY = "recipe";
+    public static final String RECIPE_INDEX_KEY = "recipe_index";
     public static final String RECIPE_STEPS_KEY = "recipe_steps";
     public static final String RECIPE_INGREDIENTS_KEY = "recipe_ingredients";
     public static final String RECIPE_STEPS_INDEX = "steps_index";

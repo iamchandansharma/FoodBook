@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.adapter.RecipeIngredientsAdapter;
 import me.chandansharma.foodbook.model.RecipeIngredients;
@@ -20,6 +22,9 @@ import me.chandansharma.foodbook.utils.RecipeDetails;
  * A simple {@link Fragment} subclass.
  */
 public class RecipeIngredientsDetailFragment extends Fragment {
+
+    @BindView(R.id.rv_recipe_ingredients_detail)
+    RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,12 +36,12 @@ public class RecipeIngredientsDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recipe_ingredients_detail, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_recipe_ingredients_detail);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ButterKnife.bind(this, rootView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecipeIngredientsAdapter recipeIngredientsAdapter = new
                 RecipeIngredientsAdapter(getActivity(), recipeIngredients);
 
-        recyclerView.setAdapter(recipeIngredientsAdapter);
+        mRecyclerView.setAdapter(recipeIngredientsAdapter);
         return rootView;
     }
 

@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.chandansharma.foodbook.R;
 import me.chandansharma.foodbook.fragment.RecipeIngredientsDetailFragment;
 import me.chandansharma.foodbook.fragment.RecipeStepsDetailFragment;
@@ -59,15 +61,16 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-    private class RecipeDetailViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class RecipeDetailViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         int mItemPosition;
-        private TextView mRecipeDetailTextView;
+        @BindView(R.id.tv_recipe_short_description)
+        TextView mRecipeDetailTextView;
 
         private RecipeDetailViewHolder(View itemView) {
             super(itemView);
 
-            mRecipeDetailTextView = (TextView) itemView.findViewById(R.id.tv_recipe_short_description);
+            ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(this);
         }

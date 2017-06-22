@@ -2,7 +2,6 @@ package me.chandansharma.foodbook.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -78,12 +77,23 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private void bindView(int itemPosition) {
 
             mItemPosition = itemPosition;
+            float smallestWidth = getSmallestWidth();
+            if (smallestWidth >= 600) {
+                if (itemPosition == 0) {
+                    mRecipeDetailTextView.setText(mContext.getString(R.string.recipe_ingredients_text));
+                    itemView.performClick();
+                } else
+                    mRecipeDetailTextView.setText("Step " + (itemPosition - 1) + ": " +
+                            mRecipeSteps.get(itemPosition - 1).getRecipeStepsShortDescription());
+            } else {
+                if (itemPosition == 0) {
+                    mRecipeDetailTextView.setText(mContext.getString(R.string.recipe_ingredients_text));
+                } else
+                    mRecipeDetailTextView.setText("Step " + (itemPosition - 1) + ": " +
+                            mRecipeSteps.get(itemPosition - 1).getRecipeStepsShortDescription());
+            }
 
-            if (itemPosition == 0)
-                mRecipeDetailTextView.setText("Recipe Ingredients");
-            else
-                mRecipeDetailTextView.setText("Step " + (itemPosition - 1) + ": " +
-                        mRecipeSteps.get(itemPosition - 1).getRecipeStepsShortDescription());
+
         }
 
         @Override
@@ -94,8 +104,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             if (mItemPosition == 0) {
 
-                if (smallestWidth >= 600 || mContext.getResources().getConfiguration().orientation
-                        == Configuration.ORIENTATION_LANDSCAPE) {
+                if (smallestWidth >= 600) {
 
                     Bundle recipeIngredientsDataBundle = new Bundle();
 
@@ -122,8 +131,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
             } else {
 
-                if (smallestWidth >= 600 || mContext.getResources().getConfiguration().orientation
-                        == Configuration.ORIENTATION_LANDSCAPE) {
+                if (smallestWidth >= 600) {
 
                     Bundle recipeStepsDataBundle = new Bundle();
 

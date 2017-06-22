@@ -75,9 +75,15 @@ public class RecipeStepsDetailFragment extends Fragment {
                     .getRecipeStepsDescription());
         float smallestWidth = getSmallestWidth();
 
-        if (smallestWidth >= 600 || getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_LANDSCAPE)
+        if (smallestWidth >= 600)
             mRecipeNavigationLinearLayout.setVisibility(View.GONE);
+        else if (getResources().getConfiguration().orientation ==
+                Configuration.ORIENTATION_LANDSCAPE) {
+            mRecipeStepsDescription.setVisibility(View.GONE);
+            mRecipeNavigationLinearLayout.setVisibility(View.GONE);
+            mSimpleExoPlayerView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+            mSimpleExoPlayerView.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+        }
         else {
 
             mPreviousRecipeStepsTextView.setOnClickListener(new View.OnClickListener() {

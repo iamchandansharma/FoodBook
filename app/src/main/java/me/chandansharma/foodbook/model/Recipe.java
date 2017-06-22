@@ -14,6 +14,7 @@ public class Recipe {
      */
     private int mRecipeId;
     private String mRecipeName;
+    private int mRecipeServingPerson;
     private String mRecipeThumbnailUrl;
     private ArrayList<RecipeIngredients> mRecipeIngredients;
     private ArrayList<RecipeSteps> mRecipeSteps;
@@ -25,11 +26,12 @@ public class Recipe {
      * @param mRecipeIngredients  Collection of Recipe Ingredients for single recipe
      * @param mRecipeSteps        Complete Recipe Procedure
      */
-    public Recipe(int mRecipeId, String mRecipeName, String mRecipeThumbnailUrl,
-                  ArrayList<RecipeIngredients> mRecipeIngredients,
+    public Recipe(int mRecipeId, String mRecipeName, int mRecipeServingPerson,
+                  String mRecipeThumbnailUrl, ArrayList<RecipeIngredients> mRecipeIngredients,
                   ArrayList<RecipeSteps> mRecipeSteps) {
         this.mRecipeId = mRecipeId;
         this.mRecipeName = mRecipeName;
+        this.mRecipeServingPerson = mRecipeServingPerson;
         this.mRecipeThumbnailUrl = mRecipeThumbnailUrl;
         this.mRecipeIngredients = mRecipeIngredients;
         this.mRecipeSteps = mRecipeSteps;
@@ -49,6 +51,14 @@ public class Recipe {
 
     public void setRecipeName(String recipeName) {
         mRecipeName = recipeName;
+    }
+
+    public int getRecipeServingPerson() {
+        return mRecipeServingPerson;
+    }
+
+    public void setRecipeServingPerson(int recipeServingPerson) {
+        mRecipeServingPerson = recipeServingPerson;
     }
 
     public String getRecipeThumbnailUrl() {

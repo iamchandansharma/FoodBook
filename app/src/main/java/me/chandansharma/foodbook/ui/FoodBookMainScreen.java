@@ -91,6 +91,7 @@ public class FoodBookMainScreen extends AppCompatActivity {
                                         .getString("name");
                                 String recipeImageThumbnailUrl = singleRecipeJsonObject
                                         .getString("image");
+                                int recipeServingPerson = singleRecipeJsonObject.getInt("servings");
 
                                 /**
                                  * fetching Single Recipe Ingredients Details
@@ -138,8 +139,8 @@ public class FoodBookMainScreen extends AppCompatActivity {
                                             );
                                     mRecipeSteps.add(singleRecipeSteps);
                                 }
-                                mRecipes.add(new Recipe(recipeId, recipeName, recipeImageThumbnailUrl,
-                                        mRecipeIngredients, mRecipeSteps));
+                                mRecipes.add(new Recipe(recipeId, recipeName, recipeServingPerson,
+                                        recipeImageThumbnailUrl, mRecipeIngredients, mRecipeSteps));
                                 mRecipeListAdapter.notifyDataSetChanged();
                             } catch (JSONException e) {
                                 e.printStackTrace();

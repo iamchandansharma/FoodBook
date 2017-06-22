@@ -68,10 +68,16 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @BindView(R.id.im_recipe_thumbnail)
         ImageView mRecipeThumbnailImageView;
+
         @BindView(R.id.tv_recipe_name)
         TextView mRecipeNameTextView;
+
+        @BindView(R.id.tv_recipe_serving_person)
+        TextView mRecipeServingPersonNumber;
+
         @BindView(R.id.ll_recipe_name)
         LinearLayout mRecipeNameLinearLayout;
+
         private int mItemPosition;
 
         private RecipeListViewHolder(View itemView) {
@@ -91,6 +97,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .into(mRecipeThumbnailImageView);
 
             mRecipeNameTextView.setText(mRecipes.get(itemPosition).getRecipeName());
+            mRecipeServingPersonNumber.setText(String.
+                    valueOf(mRecipes.get(itemPosition).getRecipeServingPerson()));
             mRecipeNameLinearLayout.setBackgroundColor(Color.argb(178, 0, 0, 0));
         }
 

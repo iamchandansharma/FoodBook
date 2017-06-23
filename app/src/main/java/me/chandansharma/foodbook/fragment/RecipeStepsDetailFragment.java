@@ -178,11 +178,13 @@ public class RecipeStepsDetailFragment extends Fragment {
     /**
      * Release the Player when the Fragment is destroyed
      */
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         mSimpleExoPlayer.stop();
         mSimpleExoPlayer.release();
         mSimpleExoPlayer = null;
     }
 }
+

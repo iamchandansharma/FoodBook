@@ -2,6 +2,7 @@ package me.chandansharma.foodbook.ui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,8 @@ public class FoodBookMainScreen extends AppCompatActivity {
      */
     private ArrayList<Recipe> mRecipes = new ArrayList<>();
     private RecipeListAdapter mRecipeListAdapter;
+    private GridLayoutManager mGridLayoutManager;
+    private Parcelable mRecyclerViewState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +57,44 @@ public class FoodBookMainScreen extends AppCompatActivity {
         mRecipeListAdapter = new RecipeListAdapter(this, mRecipes);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
-                || smallestWidth > 600)
-            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        else if (smallestWidth >= 480)
-            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        else
-            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-
+                || smallestWidth > 600) {
+            mGridLayoutManager = new GridLayoutManager(this, 3);
+            mRecyclerView.setLayoutManager(mGridLayoutManager);
+        } else if (smallestWidth >= 480) {
+            mGridLayoutManager = new GridLayoutManager(this, 2);
+            mRecyclerView.setLayoutManager(mGridLayoutManager);
+        } else {
+            mGridLayoutManager = new GridLayoutManager(this, 1);
+            mRecyclerView.setLayoutManager(mGridLayoutManager);
+        }
         mRecyclerView.setAdapter(mRecipeListAdapter);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save RecyclerView State
+        mRecyclerViewState = mGridLayoutManager.onSaveInstanceState();
+        outState.putParcelable(RecipeDetails.RECIPE_RECYCLER_VIEW_KEY, mRecyclerViewState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        //Restore RecyclerView List/ item State
+        if (savedInstanceState != null)
+            mRecyclerViewState = savedInstanceState
+                    .getParcelable(RecipeDetails.RECIPE_RECYCLER_VIEW_KEY);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mRecyclerViewState != null)
+            mGridLayoutManager.onRestoreInstanceState(mRecyclerViewState);
     }
 
     private void getRecipeListData(String recipeUrl) {

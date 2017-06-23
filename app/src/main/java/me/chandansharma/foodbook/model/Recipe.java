@@ -1,5 +1,8 @@
 package me.chandansharma.foodbook.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -7,8 +10,19 @@ import java.util.ArrayList;
  * Model for Recipe
  */
 
-public class Recipe {
+public class Recipe implements Parcelable {
 
+    public static Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel source) {
+            return new Recipe(source);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
     /**
      * Member Variable to holds Recipe Ingredients and Recipe Steps Details.
      */
@@ -35,6 +49,15 @@ public class Recipe {
         this.mRecipeThumbnailUrl = mRecipeThumbnailUrl;
         this.mRecipeIngredients = mRecipeIngredients;
         this.mRecipeSteps = mRecipeSteps;
+    }
+
+    private Recipe(Parcel in) {
+        mRecipeId = in.readInt();
+        mRecipeName = in.readString();
+        mRecipeServingPerson = in.readInt();
+        mRecipeThumbnailUrl = in.readString();
+        mRecipeIngredients = in.readArrayList(RecipeIngredients.class.getClassLoader());
+        mRecipeSteps = in.readArrayList(RecipeSteps.class.getClassLoader());
     }
 
     public int getRecipeId() {
@@ -85,4 +108,19 @@ public class Recipe {
         mRecipeSteps = recipeSteps;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mRecipeId);
+        dest.writeString(mRecipeName);
+        dest.writeInt(mRecipeServingPerson);
+        dest.writeString(mRecipeThumbnailUrl);
+        dest.writeList(mRecipeIngredients);
+        dest.writeList(mRecipeSteps);
+    }
 }
+
